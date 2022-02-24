@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import { Task } from "./interfaces/Task";
 
@@ -14,7 +15,7 @@ function App({ title }: Props) {
     {
       id: 1,
       title: "Learn React",
-      description: "Html, Css, Javascript, Tailwind, Hooks",
+      description: "Html, Css, Javascript, Hooks",
       completed: false,
     },
     {
@@ -28,7 +29,15 @@ function App({ title }: Props) {
   return (
     <div className="container" style={{ height: "100vh", marginTop: "20px" }}>
       <Navbar title={title} />
-      <TaskList tasks={tasks} />
+
+      <div className="row">
+        <div className="col-md-4">
+          <TaskForm />
+        </div>
+        <div className="col-md-8">
+          <TaskList tasks={tasks} />
+        </div>
+      </div>
     </div>
   );
 }

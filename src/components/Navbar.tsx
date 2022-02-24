@@ -6,7 +6,7 @@ interface Props {
 
 const Navbar = ({ title }: Props) => {
   return (
-    <nav className="navbar navbar-dark bg-ligth">
+    <nav className="navbar navbar-dark border-warning bg-ligth">
       <div className="container" style={{ display: "flex" }}>
         <a
           href="/"
