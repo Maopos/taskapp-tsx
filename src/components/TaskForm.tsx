@@ -1,5 +1,5 @@
 import { BsFileEarmarkPlus } from "react-icons/bs";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useRef } from "react";
 import { Task } from "../interfaces/Task";
 
 type onChangeType = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -15,6 +15,8 @@ const TaskForm = ({ addTask }: Props) => {
     description: "",
     completed: false,
   });
+
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const generateId = () => {
     const random = Math.random().toString(36).substring(2);
@@ -52,6 +54,8 @@ const TaskForm = ({ addTask }: Props) => {
       description: "",
       completed: false,
     });
+
+    inputRef.current?.focus()
   };
 
   return (
@@ -75,6 +79,8 @@ const TaskForm = ({ addTask }: Props) => {
                 name="title"
                 value={task.title}
                 onChange={handleTask}
+                autoFocus
+                ref={inputRef}
               />
             </div>
 

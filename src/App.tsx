@@ -25,16 +25,22 @@ function App({ title }: Props) {
     <div className="container" style={{ height: "100vh", marginTop: "20px" }}>
       <Navbar title={title} />
 
-      <div className="row">
-        <div className="col-md-4">
-          <TaskForm addTask={addTask} />
+      <main className="container p-4">
+        <div className="row">
+          <div className="col-md-4">
+            <TaskForm addTask={addTask} />
+          </div>
+          <div className="col-md-8">
+            <div className="row">
+              <TaskList tasks={tasks} deleteTask={deleteTask} />
+            </div>
+          </div>
         </div>
-        <div className="col-md-8">
-          <TaskList tasks={tasks} deleteTask={deleteTask} />
-        </div>
-      </div>
+      </main>
     </div>
   );
 }
 
 export default App;
+
+
