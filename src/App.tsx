@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import TaskForm from "./components/TaskForm";
@@ -18,7 +18,7 @@ function App({ title }: Props) {
   };
 
   const deleteTask = (id: string) => {
-    setTasks(tasks.filter((i) => i.id != id));
+    setTasks(tasks.filter((i) => i.id !== id));
   };
 
   return (
@@ -42,5 +42,3 @@ function App({ title }: Props) {
 }
 
 export default App;
-
-

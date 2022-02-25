@@ -16,7 +16,7 @@ const TaskForm = ({ addTask }: Props) => {
     completed: false,
   });
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const generateId = () => {
     const random = Math.random().toString(36).substring(2);
@@ -40,7 +40,7 @@ const TaskForm = ({ addTask }: Props) => {
       return;
     }
 
-    const newTask = {
+    const newTask: Task = {
       id: generateId(),
       title,
       description,
@@ -55,7 +55,7 @@ const TaskForm = ({ addTask }: Props) => {
       completed: false,
     });
 
-    inputRef.current?.focus()
+    inputRef.current?.focus();
   };
 
   return (

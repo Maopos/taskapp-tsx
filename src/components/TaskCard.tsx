@@ -20,7 +20,7 @@ const TaskCard = ({ task, deleteTask, count }: Props) => {
         <h4 className="card-title">{title}</h4>
         <p className="card-text">{description}</p>
         <button
-          className="btn btn-danger"
+          className="btn btn-danger mt-2"
           style={{ width: "100%" }}
           onClick={() => deleteTask(id)}
         >
