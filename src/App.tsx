@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import TaskForm from "./components/TaskForm";
@@ -11,20 +11,15 @@ interface Props {
 
 function App({ title }: Props) {
   // Estados
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: 1,
-      title: "Learn React",
-      description: "Html, Css, Javascript, Hooks",
-      completed: false,
-    },
-    {
-      id: 2,
-      title: "Learn Chakra UI",
-      description: "Styles, Navbar, Forms",
-      completed: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const addTask = (task: Task) => {
+    setTasks([...tasks, task]);
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks(tasks.filter((i) => i.id != id));
+  };
 
   return (
     <div className="container" style={{ height: "100vh", marginTop: "20px" }}>
@@ -32,10 +27,10 @@ function App({ title }: Props) {
 
       <div className="row">
         <div className="col-md-4">
-          <TaskForm />
+          <TaskForm addTask={addTask} />
         </div>
         <div className="col-md-8">
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} deleteTask={deleteTask} />
         </div>
       </div>
     </div>

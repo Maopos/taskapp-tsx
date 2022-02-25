@@ -1,6 +1,59 @@
 import { BsFileEarmarkPlus } from "react-icons/bs";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Task } from "../interfaces/Task";
 
-const TaskForm = () => {
+type onChangeType = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+
+interface Props {
+  addTask: (task: Task) => void;
+}
+
+const TaskForm = ({ addTask }: Props) => {
+  // Estados
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    completed: false,
+  });
+
+  const generateId = () => {
+    const random = Math.random().toString(36).substring(2);
+    const dateNow = Date.now().toString(36);
+    return random + dateNow;
+  };
+
+  const handleTask = ({ target: { name, value } }: onChangeType) => {
+    setTask({
+      ...task,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { title, description, completed } = task;
+
+    if ([title, description, completed].includes("")) {
+      return;
+    }
+
+    const newTask = {
+      id: generateId(),
+      title,
+      description,
+      completed,
+    };
+
+    addTask(newTask);
+
+    setTask({
+      title: "",
+      description: "",
+      completed: false,
+    });
+  };
+
   return (
     <div className="container" style={{ padding: "50px 0 0 50px" }}>
       <h3>Add Task:</h3>
@@ -9,7 +62,7 @@ const TaskForm = () => {
           <h4>New Task here!</h4>
         </div>
         <div className="card-body">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="col-form-label" htmlFor="title">
                 <h5>Title:</h5>
@@ -20,6 +73,8 @@ const TaskForm = () => {
                 placeholder="Task title..."
                 id="title"
                 name="title"
+                value={task.title}
+                onChange={handleTask}
               />
             </div>
 
@@ -32,9 +87,15 @@ const TaskForm = () => {
                 placeholder="Task description..."
                 id="description"
                 name="description"
+                value={task.description}
+                onChange={(e) => handleTask(e)}
               />
             </div>
-            <button className="btn btn-success mt-4" style={{ width: "100%" }}>
+            <button
+              className="btn btn-success mt-4"
+              style={{ width: "100%" }}
+              type="submit"
+            >
               Save <BsFileEarmarkPlus />
             </button>
           </form>
