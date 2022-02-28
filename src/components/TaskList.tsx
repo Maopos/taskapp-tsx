@@ -5,9 +5,10 @@ import { BiTaskX } from "react-icons/bi";
 interface Props {
   tasks: Task[];
   deleteTask: (id: string) => void;
+  setEditTask: React.Dispatch<React.SetStateAction<Task>>;
 }
 
-const TaskList = ({ tasks, deleteTask }: Props) => {
+const TaskList = ({ tasks, deleteTask, setEditTask }: Props) => {
   if (tasks.length === 0) {
     return (
       <div style={{ padding: "50px 0px" }}>
@@ -22,7 +23,13 @@ const TaskList = ({ tasks, deleteTask }: Props) => {
       <h3>Task List: {tasks.length}</h3>
       <div className="col-md-4">
         {tasks.map((i, j) => (
-          <TaskCard key={i.id} task={i} count={j} deleteTask={deleteTask} />
+          <TaskCard
+            key={i.id}
+            task={i}
+            count={j}
+            deleteTask={deleteTask}
+            setEditTask={setEditTask}
+          />
         ))}
       </div>
     </div>

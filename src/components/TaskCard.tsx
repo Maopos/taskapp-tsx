@@ -5,12 +5,14 @@ interface Props {
   task: Task;
   deleteTask: (id: string) => void;
   count: number;
+  setEditTask: React.Dispatch<React.SetStateAction<Task>>
 }
 
-const TaskCard = ({ task, deleteTask, count }: Props) => {
+const TaskCard = ({ task, deleteTask, count, setEditTask }: Props) => {
   // Destructuración de task
   const { id, title, description } = task;
 
+  
   return (
     <div className="card border-warning mb-3" style={{ maxWidth: "20rem" }}>
       <div className="card-header bg-warning">
@@ -19,6 +21,13 @@ const TaskCard = ({ task, deleteTask, count }: Props) => {
       <div className="card-body">
         <h4 className="card-title">{title}</h4>
         <p className="card-text">{description}</p>
+        <button
+          className="btn btn-warning mt-2"
+          style={{ width: "100%", color: "black" }}
+          onClick={() => setEditTask(task)}
+        >
+          Edit <BsTrash />
+        </button>
         <button
           className="btn btn-danger mt-2"
           style={{ width: "100%" }}

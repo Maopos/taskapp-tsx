@@ -12,10 +12,12 @@ interface Props {
 function App({ title }: Props) {
   // Estados
   const [tasks, setTasks] = useState<Task[]>([]);
-
-  const addTask = (task: Task) => {
-    setTasks([...tasks, task]);
-  };
+  const [editTask, setEditTask] = useState<Task>({
+    id: "",
+    title: "",
+    description: "",
+    completed: false,
+  });
 
   const deleteTask = (id: string) => {
     setTasks(tasks.filter((i) => i.id !== id));
@@ -28,11 +30,20 @@ function App({ title }: Props) {
       <main className="container p-4">
         <div className="row">
           <div className="col-md-4">
-            <TaskForm addTask={addTask} />
+            <TaskForm
+              tasks={tasks}
+              setTasks={setTasks}
+              editTask={editTask}
+              setEditTask={setEditTask}
+            />
           </div>
           <div className="col-md-8">
             <div className="row">
-              <TaskList tasks={tasks} deleteTask={deleteTask} />
+              <TaskList
+                tasks={tasks}
+                deleteTask={deleteTask}
+                setEditTask={setEditTask}
+              />
             </div>
           </div>
         </div>

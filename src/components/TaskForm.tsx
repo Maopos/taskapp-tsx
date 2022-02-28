@@ -1,16 +1,20 @@
 import { BsFileEarmarkPlus } from "react-icons/bs";
-import { ChangeEvent, FormEvent, useState, useRef } from "react";
+import { ChangeEvent, FormEvent, useState, useRef, useEffect } from "react";
 import { Task } from "../interfaces/Task";
 
 type onChangeType = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 interface Props {
-  addTask: (task: Task) => void;
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  editTask: Task;
+  setEditTask: React.Dispatch<React.SetStateAction<Task>>;
 }
 
-const TaskForm = ({ addTask }: Props) => {
+const TaskForm = ({ tasks, setTasks, editTask, setEditTask }: Props) => {
   // Estados
-  const [task, setTask] = useState({
+  const [task, setTask] = useState<Task>({
+    id: "",
     title: "",
     description: "",
     completed: false,
@@ -31,6 +35,12 @@ const TaskForm = ({ addTask }: Props) => {
     });
   };
 
+  useEffect(() => {
+    if ([task.id].includes("")) {
+      setTask(editTask);
+    }
+  }, [editTask]);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -41,15 +51,23 @@ const TaskForm = ({ addTask }: Props) => {
     }
 
     const newTask: Task = {
-      id: generateId(),
+      id: "",
       title,
       description,
       completed,
     };
 
-    addTask(newTask);
+    if (task.id) {
+      const updateList = tasks.map((i) => (i.id === task.id ? task : i));
+      setTasks(updateList);
+      setEditTask({ id: "", title: "", description: "", completed: false });
+    } else {
+      newTask.id = generateId();
+      setTasks([...tasks, newTask]);
+    }
 
     setTask({
+      id: "",
       title: "",
       description: "",
       completed: false,
